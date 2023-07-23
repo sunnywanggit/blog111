@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '12' #超过12的版本有几个warning，我不想处理
+          node-version: '16.15.0'
 
       # Deploy hexo blog website.
       - name: Setup Hexo
