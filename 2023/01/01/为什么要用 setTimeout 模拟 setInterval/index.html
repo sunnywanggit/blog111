@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="referrer" content="no-referrer">
+  
+  <title>为什么要用 setTimeout 模拟 setInterval | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. setTimeoutsetTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。 1.1 参数 第一个参数function，必填的，回调函数，可以是一个函数，也可以是一个函数名。 第二个参数delay，可选的，延迟时间，单位是ms。 第三个参数param1,param2,param3…,可选的，是传递给回调函数的参数，比较不常用到，在IE9 及其更早版本不支持该参数。  1.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么要用 setTimeout 模拟 setInterval">
+<meta property="og:url" content="http://example.com/2023/01/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%20setTimeout%20%E6%A8%A1%E6%8B%9F%20setInterval/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. setTimeoutsetTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。 1.1 参数 第一个参数function，必填的，回调函数，可以是一个函数，也可以是一个函数名。 第二个参数delay，可选的，延迟时间，单位是ms。 第三个参数param1,param2,param3…,可选的，是传递给回调函数的参数，比较不常用到，在IE9 及其更早版本不支持该参数。  1.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/sunnywanggitee/img-url/raw/master/img/20230723202234.png">
+<meta property="article:published_time" content="2023-01-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2023-07-23T16:15:15.269Z">
+<meta property="article:author" content="Hammers">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/sunnywanggitee/img-url/raw/master/img/20230723202234.png">
+  
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  
+<link rel="stylesheet" href="/css/typing.css">
+
+  
+<link rel="stylesheet" href="/css/donate.css">
+
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  
+    
+      <body>
+    
+  
+      <div id="container" class="container">
+        <article id="post-为什么要用 setTimeout 模拟 setInterval" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <header id="header" class="header">
+  <nav class="mobile-nav">
+    <h1 class="nickname">关于我</h1>
+    <ul class="mobile-nav-menu">
+      <label for="mobile-menu-toggle"><a id="menu-button">&#9776; Menu</a></label>
+      <input type="checkbox" id="mobile-menu-toggle"/>
+      <ul class="mobile-nav-link">
+        
+        <a href="/">Home</a>
+        
+        <a href="/books">Books</a>
+        
+        <a href="/archives">Archives</a>
+        
+      </ul>
+    </ul>
+  </nav>
+	
+		<nav id="main-nav" class="main-nav">
+	
+	
+	  <a class="main-nav-link" href="/">Home</a>
+	
+	  <a class="main-nav-link" href="/books">Books</a>
+	
+	  <a class="main-nav-link" href="/archives">Archives</a>
+	
+  </nav>
+</header>
+
+  <hr/>
+  <div class="article-inner">
+    
+
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      为什么要用 setTimeout 模拟 setInterval
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry typo" itemprop="articleBody">
+      
+        <meta name="referrer" content="no-referrer">
+
+<h1 id="1-setTimeout"><a href="#1-setTimeout" class="headerlink" title="1. setTimeout"></a>1. setTimeout</h1><p>setTimeout() 方法用于在指定的毫秒数后调用函数或计算表达式。</p>
+<h2 id="1-1-参数"><a href="#1-1-参数" class="headerlink" title="1.1 参数"></a>1.1 参数</h2><ul>
+<li>第一个参数function，必填的，回调函数，可以是一个函数，也可以是一个函数名。</li>
+<li>第二个参数delay，可选的，延迟时间，单位是ms。</li>
+<li>第三个参数param1,param2,param3…,可选的，是传递给回调函数的参数，比较不常用到，在IE9 及其更早版本不支持该参数。</li>
+</ul>
+<h2 id="1-2-返回值"><a href="#1-2-返回值" class="headerlink" title="1.2 返回值"></a>1.2 返回值</h2><p>返回一个 ID（数字），可以将这个ID传递给 clearTimeout() 来取消执行。</p>
+<h1 id="2-setInterval"><a href="#2-setInterval" class="headerlink" title="2. setInterval"></a>2. setInterval</h1><p>setInterval() 方法可按照指定的周期（以毫秒计）来调用函数或计算表达式。</p>
+<h2 id="2-1-参数"><a href="#2-1-参数" class="headerlink" title="2.1 参数"></a>2.1 参数</h2><ul>
+<li>第一个参数function，必填的，回调函数，可以是一个函数，也可以是一个函数名。</li>
+<li>第二个参数delay，可选的，间隔时间，单位是ms。</li>
+<li>第三个参数param1,param2,param3…,可选的，是传递给回调函数的参数，比较不常用到，在IE9 及其更早版本不支持该参数。</li>
+</ul>
+<h2 id="2-2-返回值"><a href="#2-2-返回值" class="headerlink" title="2.2 返回值"></a>2.2 返回值</h2><p>返回一个 ID（数字），可以将这个ID传递给clearInterval()以取消执行。</p>
+<h1 id="3-setTimeout-最短执行时间"><a href="#3-setTimeout-最短执行时间" class="headerlink" title="3. setTimeout 最短执行时间"></a>3. setTimeout 最短执行时间</h1><p>很多人认为 setTimeout 是延时多久，那就应该是多久后执行。</p>
+<p>其实这个观点是错误的，因为 JS 是单线程执行的，<strong>如果前面的代码影响了性能，就会导致 setTimeout 不会按期执行。</strong>当然了，可以通过代码去修正 setTimeout，从而使定时器相对准确：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> period = <span class="number">60</span> * <span class="number">1000</span> * <span class="number">60</span> * <span class="number">2</span></span><br><span class="line"><span class="keyword">let</span> startTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>()</span><br><span class="line"><span class="keyword">let</span> count = <span class="number">0</span></span><br><span class="line"><span class="keyword">let</span> end = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>() + period</span><br><span class="line"><span class="keyword">let</span> interval = <span class="number">1000</span></span><br><span class="line"><span class="keyword">let</span> currentInterval = interval</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">loop</span>(<span class="params"></span>) &#123;</span><br><span class="line">  count++</span><br><span class="line">  <span class="comment">// 代码执行所消耗的时间</span></span><br><span class="line">  <span class="keyword">let</span> offset = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>() - (startTime + count * interval);</span><br><span class="line">  <span class="keyword">let</span> diff = end - <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>()</span><br><span class="line">  <span class="keyword">let</span> h = <span class="title class_">Math</span>.<span class="title function_">floor</span>(diff / (<span class="number">60</span> * <span class="number">1000</span> * <span class="number">60</span>))</span><br><span class="line">  <span class="keyword">let</span> hdiff = diff % (<span class="number">60</span> * <span class="number">1000</span> * <span class="number">60</span>)</span><br><span class="line">  <span class="keyword">let</span> m = <span class="title class_">Math</span>.<span class="title function_">floor</span>(hdiff / (<span class="number">60</span> * <span class="number">1000</span>))</span><br><span class="line">  <span class="keyword">let</span> mdiff = hdiff % (<span class="number">60</span> * <span class="number">1000</span>)</span><br><span class="line">  <span class="keyword">let</span> s = mdiff / (<span class="number">1000</span>)</span><br><span class="line">  <span class="keyword">let</span> sCeil = <span class="title class_">Math</span>.<span class="title function_">ceil</span>(s)</span><br><span class="line">  <span class="keyword">let</span> sFloor = <span class="title class_">Math</span>.<span class="title function_">floor</span>(s)</span><br><span class="line">  <span class="comment">// 得到下一次循环所消耗的时间</span></span><br><span class="line">  currentInterval = interval - offset </span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;时：&#x27;</span>+h, <span class="string">&#x27;分：&#x27;</span>+m, <span class="string">&#x27;毫秒：&#x27;</span>+s, <span class="string">&#x27;秒向上取整：&#x27;</span>+sCeil, <span class="string">&#x27;代码执行时间：&#x27;</span>+offset, <span class="string">&#x27;下次循环间隔&#x27;</span>+currentInterval) </span><br><span class="line">  <span class="built_in">setTimeout</span>(loop, currentInterval)</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">setTimeout</span>(loop, currentInterval)</span><br></pre></td></tr></table></figure>
+
+<p>第二个参数delay未设置的时候，默认为0，意味着“马上”执行，或者尽快执行。</p>
+<p>但是有一个规定如下：</p>
+<blockquote>
+<p>If timeout is less than 0, then set timeout to 0. If nesting level is greater than 5, and timeout is less than 4, then set timeout to 4.</p>
+</blockquote>
+<p>上面的意思是说,如果延迟时间短于0，则将延迟时间设置为0。如果嵌套级别大于5，延迟时间短于4ms，则将延迟时间设置为4ms。</p>
+<p>还有另外一种情况。为了节电，对于那些不处于当前窗口的页面，浏览器会将最短延时限制扩大到1000ms。</p>
+<p><strong>以上可以说是造成定时器不准时原因之一。</strong></p>
+<h1 id="4-setInterval-最短执行时间"><a href="#4-setInterval-最短执行时间" class="headerlink" title="4. setInterval 最短执行时间"></a>4. setInterval 最短执行时间</h1><p>在John Resig的新书《Javascript忍者的秘密》一书中提到</p>
+<blockquote>
+<p>Browsers all have a 10ms minimum delay on OSX and a(approximately) 15ms delay on Windows.</p>
+</blockquote>
+<p>在苹果机上的最短间隔时间是10毫秒,在Windows系统上的最短间隔时间大约是15毫秒。</p>
+<p>大多数电脑显示器的刷新频率是60HZ，大概相当于每秒钟重绘60次。因此，最平滑的动画效的最佳循环间隔是1000ms&#x2F;60，约等于16.6ms。</p>
+<p>综上所述，我认为setInterval的最短间隔时间应该为16.6ms。</p>
+<h1 id="5-setInterval-的缺点"><a href="#5-setInterval-的缺点" class="headerlink" title="5. setInterval 的缺点"></a>5. setInterval 的缺点</h1><p>再次强调，定时器指定的时间间隔，表示的是何时将定时器的代码添加到消息队列，而<strong>不是何时执行代码</strong>。区别在于，setTimeout直接推入，setInterval会检查任务队列中是否存在相同的回调函数（<strong>未执行</strong>），若有则跳过本次推入。</p>
+<p>所以真正何时执行代码的时间是不能保证的，取决于何时被主线程的事件循环取到，并执行。</p>
+<p><img src="https://gitee.com/sunnywanggitee/img-url/raw/master/img/20230723202234.png"></p>
+<ul>
+<li>一开始执行 setInterval, 100 毫秒后将要执行的代码添加到队列。</li>
+<li>100 毫秒时，执行代码进入队列，队列空闲，定时器内的代码执行。</li>
+<li>200 毫秒时，第一次的定时器代码还在执行当中。第二次的定时器代码被推入事件队列，等待队列空闲，然后执行。</li>
+<li>300 毫秒时，第一次的定时器代码还在执行中，第二次的定时器代码在事件队列末端等待执行。因为该定时器已经有第二次的代码在队列中等待了，所以<strong>这一次的代码不会被推入队列，被忽略了</strong>。</li>
+<li>400 毫秒时，第一次的定时器代码执行完毕，队列空闲，下一个等待的代码执行，第二次的定时器代码开始执行。</li>
+</ul>
+<p>捋一捋，这里的<strong>第一次的代码和第二次代码的间隔并没有预期的 100 毫米，而是第一次的执行完，第二次的立马执行了。因为第一的代码还没执行完，第二次的代码就已经在队列中等待了。</strong></p>
+<p>关于被忽略的第三次定时器代码，因为 300 毫秒时，这个定时器已经有第二次的代码在等待了，而只有当没有该定时器的代码在队列中时，该定时器新的代码才能去排队，所以第三次不会被添加到队列中。</p>
+<p>由上可见，在这种极端情况下，暴露出来了 setInterval 的两个缺点：</p>
+<ol>
+<li><strong>使用 setInterval 时，某些间隔会被跳过；</strong></li>
+<li><strong>可能多个定时器会连续执行；</strong></li>
+</ol>
+<p>可以这么理解：每个 setTimeout 产生的任务会直接 push 到任务队列中；而 setInterval 在每次把任务 push 到任务队列前，都要进行一下判断(看上次的任务是否仍在队列中，如果有则不添加，没有则添加)。</p>
+<p>因而我们一般用 setTimeout 模拟 setInterval ，来规避掉上面的缺点。</p>
+<h1 id="6-经典回顾"><a href="#6-经典回顾" class="headerlink" title="6. 经典回顾"></a>6. 经典回顾</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(i);</span><br><span class="line">  &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>做过的朋友都知道：是一次输出了 5 个 5 ; 那么问题来了：是每隔 1 秒输出一个 5 ？还是一秒后立即输出 5 个 5 ？</p>
+<p>答案是：一秒后立即输出 5 个 5因为 for 循环了五次，所以 setTimeout 被 5 次添加到时间循环中，等待一秒后全部执行。</p>
+<h1 id="7-用-setTimeout-实现-setInterval"><a href="#7-用-setTimeout-实现-setInterval" class="headerlink" title="7. 用 setTimeout 实现 setInterval"></a>7. 用 setTimeout 实现 setInterval</h1><p>根据前面的分析，在某些情况下，setInterval 缺点是很明显的，为了解决这些弊端，可以使用 setTimeout() 代替来模拟实现 setInterval。</p>
+<ul>
+<li>在前一个定时器执行完前，不会向队列插入新的定时器（解决缺点一）</li>
+<li>保证定时器间隔（解决缺点二）<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mySetInterval</span>(<span class="params">fn, time = <span class="number">1000</span></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timer = <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">let</span> isClear = <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">interval</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (isClear) &#123;</span><br><span class="line">      isClear = <span class="literal">false</span>;</span><br><span class="line">      <span class="built_in">clearTimeout</span>(timer);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">fn</span>();</span><br><span class="line">    timer = <span class="built_in">setTimeout</span>(interval, time);</span><br><span class="line">  &#125;</span><br><span class="line">  timer = <span class="built_in">setTimeout</span>(interval, time);</span><br><span class="line">  <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    isClear = <span class="literal">true</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="8-用-requestAnimationFrame-实现-setInterval"><a href="#8-用-requestAnimationFrame-实现-setInterval" class="headerlink" title="8.用 requestAnimationFrame  实现 setInterval"></a>8.用 requestAnimationFrame  实现 setInterval</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">setInterval</span>(<span class="params">callback, interval</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> timer</span><br><span class="line">  <span class="keyword">const</span> now = <span class="title class_">Date</span>.<span class="property">now</span></span><br><span class="line">  <span class="keyword">let</span> startTime = <span class="title function_">now</span>()</span><br><span class="line">  <span class="keyword">let</span> endTime = startTime</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">loop</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    timer = <span class="variable language_">window</span>.<span class="title function_">requestAnimationFrame</span>(loop)</span><br><span class="line">    endTime = <span class="title function_">now</span>()</span><br><span class="line">    <span class="keyword">if</span> (endTime - startTime &gt;= interval) &#123;</span><br><span class="line">      startTime = endTime = <span class="title function_">now</span>()</span><br><span class="line">      <span class="title function_">callback</span>(timer)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  timer = <span class="variable language_">window</span>.<span class="title function_">requestAnimationFrame</span>(loop)</span><br><span class="line">  <span class="keyword">return</span> timer</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a = <span class="number">0</span></span><br><span class="line"><span class="built_in">setInterval</span>(<span class="function"><span class="params">timer</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="number">1</span>)</span><br><span class="line">  a++</span><br><span class="line">  <span class="keyword">if</span> (a === <span class="number">3</span>) <span class="title function_">cancelAnimationFrame</span>(timer)</span><br><span class="line">&#125;, <span class="number">1000</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>首先 requestAnimationFrame 自带函数节流功能，基本可以保证在 16.6 毫秒内只执行一次（不掉帧的情况下），并且该函数的延时效果是精确的，没有其他定时器时间不准的问题，当然你也可以通过该函数来实现 setTimeout。</p>
+<p>参考文章：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6941194115392634888">高频前端面试题汇总之JavaScript篇（下）</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904022051127310">定时器不准时☞带你揭秘setTimeout和setInterval</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6989055903651594248">为什么要用 setTimeout 模拟 setInterval</a></li>
+</ul>
+
+      
+      
+    </div>
+    <footer class="article-footer">
+      <ul class="article-meta">
+        <li>
+          <span class="label">Published Date:</span>
+          <a href="/2023/01/01/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%20setTimeout%20%E6%A8%A1%E6%8B%9F%20setInterval/" class="article-date">
+  <time class="dt-published" datetime="2023-01-01T00:00:00.000Z" itemprop="datePublished">2023-01-01</time>
+</a>
+
+        </li>
+        
+        
+        <hr/>
+      </ul>
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav" class="article-nav">
+  
+    <a href="/2023/01/01/hello-world/" id="article-nav-newer" class="article-nav-link-wrap newer">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <span id="article-nav-older" class="article-nav-link-wrap older"></span>
+  
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+      </div>
+      
+    <footer id="footer" class="post-footer footer">
+      
+      <hr/>
+      <div id="footerContent" class="footer-content">
+        <p>告诫自己，即使再累也不要忘记学习，成功没有捷进可走，只有一步接着一步走下去！</p>
+
+
+      </div>
+    </footer>
+
+      
+
+
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+
+
+
+  
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/typing.js"></script>
+
+<!--[if lt IE 9]>
+<script src="https://cdn.jsdelivr.net/npm/html5shiv@3/dist/html5shiv.min.js"></script>
+<![endif]-->
+
+
+
+
+
+
+
+    </div>
+  </body>
+</html>
